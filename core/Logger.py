@@ -10,7 +10,7 @@ class Logger:
         self.logger = None
         self.__logFileName = logFileName
 
-    def getLogger(self, level=logging.DEBUG, when='D', back_count=0):
+    def getLogger(self, level=logging.DEBUG, when="D", back_count=0):
         """
         :brief  日志记录
         :param level: 日志等级
@@ -27,8 +27,9 @@ class Logger:
         # 创建一个日志器。提供了应用程序接口
         self.logger = logging.getLogger(self.__logFileName)
 
-        dirName, fileName = os.path.split(os.path.abspath(sys.argv[0]))
-        LOG_ROOT = dirName
+        paths = os.path.split(os.path.abspath(sys.argv[0]))[0].split("\\")
+
+        LOG_ROOT = "\\".join(paths[: len(paths) - 1])
 
         # 设置日志输出的最低等级,低于当前等级则会被忽略
         self.logger.setLevel(level)
@@ -40,7 +41,9 @@ class Logger:
         logFilePath = os.path.join(logPath, self.__logFileName)
 
         # 创建格式器
-        formatter = logging.Formatter('%(asctime)s - %(pathname)s[line:%(lineno)d] - %(levelname)s: %(message)s')
+        formatter = logging.Formatter(
+            "%(asctime)s - %(pathname)s[line:%(lineno)d] - %(levelname)s: %(message)s"
+        )
 
         # 创建处理器：ch为控制台处理器，fh为文件处理器
         ch = logging.StreamHandler()
@@ -48,10 +51,8 @@ class Logger:
 
         # 输出到文件
         fh = logging.handlers.TimedRotatingFileHandler(
-            filename=logFilePath,
-            when=when,
-            backupCount=back_count,
-            encoding='utf-8')
+            filename=logFilePath, when=when, backupCount=back_count, encoding="utf-8"
+        )
         fh.setLevel(level)
 
         # 设置日志输出格式
@@ -83,4 +84,3 @@ class Logger:
 
     def critical(self, msg):
         self.logger.critical(Fore.RED + "CRITICAL - " + str(msg) + Style.RESET_ALL)
-

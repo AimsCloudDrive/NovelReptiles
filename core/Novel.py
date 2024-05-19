@@ -30,7 +30,7 @@ class Novel(metaclass=abc.ABCMeta):
         if saveFIleName is None:
             __fileName = "newFile.txt"
         else:
-            __fileName = "../txts/"
+            __fileName = saveFIleName
         self.file = open(filePredix + __fileName, "w+", encoding=Code.UTF8)
         self.logger = None
         logFileName = kwargs.get("logFileName")
