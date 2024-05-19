@@ -25,11 +25,13 @@ class Novel(metaclass=abc.ABCMeta):
 
         self.file = None
         saveFIleName = kwargs.get("novelSaveFIleName")
+        filePredix = "../txts/"
+        __fileName = ""
         if saveFIleName is None:
-            self.file = open("./tete/" + "newFile.txt", "w+", encoding=Code.UTF8)
+            __fileName = "newFile.txt"
         else:
-            self.file = open("./tete/" + saveFIleName, "w+", encoding=Code.UTF8)
-
+            __fileName = "../txts/"
+        self.file = open(filePredix + __fileName, "w+", encoding=Code.UTF8)
         self.logger = None
         logFileName = kwargs.get("logFileName")
         if logFileName is None:
